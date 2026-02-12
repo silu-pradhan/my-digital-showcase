@@ -56,18 +56,22 @@ const Section = ({ children, id, className = "" }: { children: React.ReactNode; 
 const navLinks = ["About", "Skills", "Projects", "Certifications", "Contact"];
 
 const skills = [
-  { name: "JavaScript", icon: <Code2 size={22} />, level: 90 },
-  { name: "Node.js", icon: <Terminal size={22} />, level: 88 },
-  { name: "React", icon: <Code2 size={22} />, level: 85 },
-  { name: "Express.js", icon: <Terminal size={22} />, level: 85 },
-  { name: "MongoDB", icon: <Database size={22} />, level: 82 },
-  { name: "Python", icon: <Code2 size={22} />, level: 78 },
-  { name: "SQL", icon: <Database size={22} />, level: 78 },
-  { name: "TypeScript", icon: <Code2 size={22} />, level: 80 },
-  { name: "HTML/CSS", icon: <Globe size={22} />, level: 92 },
-  { name: "Docker", icon: <Layers size={22} />, level: 70 },
-  { name: "Git", icon: <Layers size={22} />, level: 85 },
-  { name: "Java", icon: <Code2 size={22} />, level: 72 },
+  { name: "JavaScript", icon: <Code2 size={22} /> },
+  { name: "Node.js", icon: <Terminal size={22} /> },
+  { name: "React", icon: <Code2 size={22} /> },
+  { name: "Express.js", icon: <Terminal size={22} /> },
+  { name: "MongoDB", icon: <Database size={22} /> },
+  { name: "Python", icon: <Code2 size={22} /> },
+  { name: "SQL", icon: <Database size={22} /> },
+  { name: "TypeScript", icon: <Code2 size={22} /> },
+  { name: "HTML/CSS", icon: <Globe size={22} /> },
+  { name: "Docker", icon: <Layers size={22} /> },
+  { name: "Git", icon: <Layers size={22} /> },
+  { name: "Java", icon: <Code2 size={22} /> },
+  { name: "NumPy", icon: <Code2 size={22} /> },
+  { name: "Pandas", icon: <Database size={22} /> },
+  { name: "Matplotlib", icon: <Layers size={22} /> },
+  { name: "Scikit-Learn", icon: <Sparkles size={22} /> },
 ];
 
 const projects = [
@@ -87,6 +91,12 @@ const projects = [
     title: "Blood Vault",
     description: "Centralized Blood Bank Management System with real-time inventory tracking, automated request workflows, and JWT-based role access control.",
     tech: ["Node.js", "Express", "MongoDB", "React"],
+    link: "#",
+  },
+  {
+    title: "NeoMeet",
+    description: "A real-time video call and chat application where multiple users can join rooms, talk, and collaborate with each other seamlessly.",
+    tech: ["WebRTC", "Node.js", "Socket.IO", "React"],
     link: "#",
   },
 ];
@@ -132,58 +142,48 @@ const Particles = () => (
   </div>
 );
 
-// ─── Typing Effect ───
-const TypingText = ({ text }: { text: string }) => {
-  const [displayed, setDisplayed] = useState("");
+// ─── Rotating Role Text ───
+const roles = ["Backend Developer", "Full Stack Developer", "Data Science Enthusiast"];
+const RotatingText = () => {
+  const [index, setIndex] = useState(0);
   useEffect(() => {
-    let i = 0;
     const interval = setInterval(() => {
-      setDisplayed(text.slice(0, i + 1));
-      i++;
-      if (i >= text.length) clearInterval(interval);
-    }, 60);
+      setIndex((prev) => (prev + 1) % roles.length);
+    }, 2500);
     return () => clearInterval(interval);
-  }, [text]);
+  }, []);
   return (
-    <span className="font-display">
-      {displayed}
+    <span className="font-display inline-block h-8 relative overflow-hidden">
       <motion.span
-        animate={{ opacity: [1, 0] }}
-        transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
-        className="text-primary"
+        key={index}
+        initial={{ y: 30, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: -30, opacity: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="text-primary block"
       >
-        |
+        {roles[index]}
       </motion.span>
     </span>
   );
 };
 
-// ─── Skill Bar ───
-const SkillBar = ({ name, icon, level, index }: { name: string; icon: React.ReactNode; level: number; index: number }) => {
+// ─── Skill Icon Card ───
+const SkillIcon = ({ name, icon, index }: { name: string; icon: React.ReactNode; index: number }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
   return (
     <motion.div
       ref={ref}
       custom={index}
-      variants={fadeUp}
+      variants={scaleIn}
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
-      className="group glass rounded-xl p-4 hover:glow-sm transition-all duration-300"
+      whileHover={{ scale: 1.12, rotate: 3 }}
+      className="group glass rounded-xl p-4 flex flex-col items-center gap-2 cursor-default hover:glow-sm transition-all duration-300"
     >
-      <div className="flex items-center gap-3 mb-3">
-        <span className="text-primary group-hover:scale-110 transition-transform duration-300">{icon}</span>
-        <span className="font-display text-sm font-medium text-foreground">{name}</span>
-        <span className="ml-auto text-xs text-muted-foreground">{level}%</span>
-      </div>
-      <div className="h-1.5 rounded-full bg-muted overflow-hidden">
-        <motion.div
-          className="h-full rounded-full bg-gradient-to-r from-primary to-[hsl(200,70%,50%)]"
-          initial={{ width: 0 }}
-          animate={isInView ? { width: `${level}%` } : { width: 0 }}
-          transition={{ duration: 1.2, delay: index * 0.1, ease: "easeOut" }}
-        />
-      </div>
+      <span className="text-primary group-hover:text-[hsl(200,70%,50%)] transition-colors duration-300">{icon}</span>
+      <span className="font-display text-xs font-medium text-muted-foreground group-hover:text-foreground transition-colors">{name}</span>
     </motion.div>
   );
 };
@@ -213,7 +213,7 @@ const Index = () => {
             className="font-display text-lg font-bold text-gradient"
             whileHover={{ scale: 1.05 }}
           >
-            &lt;Dev /&gt;
+            &lt;SP /&gt;
           </motion.span>
           <div className="hidden md:flex items-center gap-6">
             {navLinks.map((link) => (
@@ -234,12 +234,28 @@ const Index = () => {
       {/* Hero */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <Particles />
-        <motion.div style={{ y: bgY }} className="absolute inset-0 opacity-5">
+        <motion.div style={{ y: bgY }} className="absolute inset-0 opacity-10">
           <div className="absolute inset-0" style={{
             backgroundImage: "radial-gradient(circle at 1px 1px, hsl(174 60% 45% / 0.3) 1px, transparent 0)",
             backgroundSize: "40px 40px",
           }} />
         </motion.div>
+        {/* Glowing orbs */}
+        <motion.div
+          className="absolute top-1/4 left-1/4 w-72 h-72 rounded-full blur-[120px] bg-primary/20"
+          animate={{ x: [0, 60, -40, 0], y: [0, -50, 30, 0], scale: [1, 1.2, 0.9, 1] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full blur-[100px] bg-[hsl(200,70%,50%,0.15)]"
+          animate={{ x: [0, -50, 40, 0], y: [0, 40, -60, 0], scale: [1, 0.8, 1.15, 1] }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute top-1/2 right-1/3 w-48 h-48 rounded-full blur-[80px] bg-[hsl(280,60%,50%,0.1)]"
+          animate={{ x: [0, 30, -30, 0], y: [0, -30, 50, 0] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        />
 
         <div className="relative z-10 text-center px-6 max-w-4xl">
           <motion.div
@@ -283,7 +299,7 @@ const Index = () => {
             transition={{ duration: 0.6, delay: 0.5 }}
             className="text-lg sm:text-xl text-muted-foreground mb-8"
           >
-            <TypingText text="Backend Developer | Full Stack | Data Science Enthusiast" />
+            <RotatingText />
           </motion.div>
 
           <motion.div
@@ -407,9 +423,9 @@ const Index = () => {
             <div className="h-1 w-16 bg-gradient-to-r from-primary to-[hsl(200,70%,50%)] rounded-full mx-auto mb-4" />
             <p className="text-muted-foreground max-w-md mx-auto">Technologies and tools I work with</p>
           </motion.div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-8 gap-4">
             {skills.map((skill, i) => (
-              <SkillBar key={skill.name} {...skill} index={i} />
+              <SkillIcon key={skill.name} {...skill} index={i} />
             ))}
           </div>
         </Section>
