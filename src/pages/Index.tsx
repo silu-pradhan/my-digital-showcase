@@ -4,8 +4,9 @@ import {
   Code2, Database, Globe, Mail, Github, Linkedin, ExternalLink,
   ChevronDown, Award, Briefcase, User, Sparkles, Terminal, Layers
 } from "lucide-react";
+import profilePhoto from "@/assets/profile-photo.jpeg";
 import deltaCertificate from "@/assets/delta-certificate.png";
-import dataScienceCertificate from "@/assets/data-science-certificate.png";
+import dataScienceCertificate from "@/assets/data-science-certificate.jpg";
 
 // ─── Animation Variants ───
 const fadeUp = {
@@ -55,33 +56,37 @@ const Section = ({ children, id, className = "" }: { children: React.ReactNode; 
 const navLinks = ["About", "Skills", "Projects", "Certifications", "Contact"];
 
 const skills = [
-  { name: "React", icon: <Code2 size={22} />, level: 90 },
-  { name: "TypeScript", icon: <Code2 size={22} />, level: 85 },
-  { name: "Node.js", icon: <Terminal size={22} />, level: 80 },
-  { name: "Python", icon: <Code2 size={22} />, level: 75 },
-  { name: "MongoDB", icon: <Database size={22} />, level: 80 },
+  { name: "JavaScript", icon: <Code2 size={22} />, level: 90 },
+  { name: "Node.js", icon: <Terminal size={22} />, level: 88 },
+  { name: "React", icon: <Code2 size={22} />, level: 85 },
+  { name: "Express.js", icon: <Terminal size={22} />, level: 85 },
+  { name: "MongoDB", icon: <Database size={22} />, level: 82 },
+  { name: "Python", icon: <Code2 size={22} />, level: 78 },
   { name: "SQL", icon: <Database size={22} />, level: 78 },
+  { name: "TypeScript", icon: <Code2 size={22} />, level: 80 },
   { name: "HTML/CSS", icon: <Globe size={22} />, level: 92 },
+  { name: "Docker", icon: <Layers size={22} />, level: 70 },
   { name: "Git", icon: <Layers size={22} />, level: 85 },
+  { name: "Java", icon: <Code2 size={22} />, level: 72 },
 ];
 
 const projects = [
   {
-    title: "E-Commerce Platform",
-    description: "Full-stack e-commerce app with payment integration, cart management, and admin dashboard.",
-    tech: ["React", "Node.js", "MongoDB", "Stripe"],
+    title: "Real-Time Collaborative Code Sharing",
+    description: "Real-time collaborative code-sharing platform using Node.js and Socket.IO with room-based WebSocket communication and chat functionality.",
+    tech: ["Node.js", "Express", "MongoDB", "React", "Socket.IO"],
     link: "#",
   },
   {
-    title: "Task Management App",
-    description: "Real-time collaborative task board with drag-and-drop, notifications, and team features.",
-    tech: ["React", "TypeScript", "Firebase"],
+    title: "LeetCode Node Backend",
+    description: "Backend API for a LeetCode-style coding platform with structured problem retrieval, submission handling, and code evaluation services.",
+    tech: ["Node.js", "Express", "TypeScript"],
     link: "#",
   },
   {
-    title: "Portfolio Website",
-    description: "Modern animated portfolio with smooth scroll, dark theme, and responsive design.",
-    tech: ["React", "Framer Motion", "Tailwind"],
+    title: "Blood Vault",
+    description: "Centralized Blood Bank Management System with real-time inventory tracking, automated request workflows, and JWT-based role access control.",
+    tech: ["Node.js", "Express", "MongoDB", "React"],
     link: "#",
   },
 ];
@@ -249,14 +254,27 @@ const Index = () => {
             </div>
           </motion.div>
 
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.15 }}
+            className="mb-6"
+          >
+            <img
+              src={profilePhoto}
+              alt="Santanu Pradhan"
+              className="w-32 h-32 sm:w-40 sm:h-40 rounded-full mx-auto object-cover border-4 border-primary/40 shadow-lg"
+            />
+          </motion.div>
+
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
             className="text-4xl sm:text-6xl md:text-7xl font-bold font-display mb-6 leading-tight"
           >
             Hi, I'm{" "}
-            <span className="text-gradient">Developer</span>
+            <span className="text-gradient">Santanu Pradhan</span>
           </motion.h1>
 
           <motion.div
@@ -265,7 +283,7 @@ const Index = () => {
             transition={{ duration: 0.6, delay: 0.5 }}
             className="text-lg sm:text-xl text-muted-foreground mb-8"
           >
-            <TypingText text="Full Stack Developer | Data Science Enthusiast" />
+            <TypingText text="Backend Developer | Full Stack | Data Science Enthusiast" />
           </motion.div>
 
           <motion.div
@@ -320,10 +338,10 @@ const Index = () => {
               </h2>
               <div className="h-1 w-16 bg-gradient-to-r from-primary to-[hsl(200,70%,50%)] rounded-full mb-6" />
               <p className="text-muted-foreground leading-relaxed mb-4">
-                I'm a passionate Full Stack Developer with experience building modern web applications. I love turning complex problems into elegant, user-friendly solutions.
+                I'm Santanu Pradhan, a B.Tech CST student at Nalanda Institute of Technology, Bhubaneswar (CGPA 8.3). I specialize in backend development with Node.js, Express, and MongoDB.
               </p>
               <p className="text-muted-foreground leading-relaxed mb-6">
-                With a strong foundation in both frontend and backend technologies, I specialize in creating scalable, performant applications that deliver real value.
+                Previously interned as a Backend Developer at SLK Software, building scalable REST APIs, authentication systems, and database solutions. Passionate about real-time applications and open source.
               </p>
               <div className="flex gap-4">
                 {[
@@ -367,9 +385,9 @@ const Index = () => {
                     <span className="text-[hsl(200,70%,50%)]">const</span>{" "}
                     <span className="text-[hsl(45,90%,55%)]">developer</span>{" "}
                     <span className="text-muted-foreground">=</span> {`{`}{"\n"}
-                    {"  "}<span className="text-primary">name</span>: <span className="text-[hsl(140,60%,50%)]">"Developer"</span>,{"\n"}
-                    {"  "}<span className="text-primary">role</span>: <span className="text-[hsl(140,60%,50%)]">"Full Stack Dev"</span>,{"\n"}
-                    {"  "}<span className="text-primary">passion</span>: <span className="text-[hsl(140,60%,50%)]">"Building cool stuff"</span>,{"\n"}
+                    {"  "}<span className="text-primary">name</span>: <span className="text-[hsl(140,60%,50%)]">"Santanu Pradhan"</span>,{"\n"}
+                    {"  "}<span className="text-primary">role</span>: <span className="text-[hsl(140,60%,50%)]">"Backend Developer"</span>,{"\n"}
+                    {"  "}<span className="text-primary">passion</span>: <span className="text-[hsl(140,60%,50%)]">"Building scalable APIs"</span>,{"\n"}
                     {"  "}<span className="text-primary">learning</span>: <span className="text-[hsl(45,90%,55%)]">true</span>,{"\n"}
                     {"  "}<span className="text-primary">coffee</span>: <span className="text-[hsl(45,90%,55%)]">Infinity</span>{"\n"}
                     {`}`};
@@ -509,7 +527,7 @@ const Index = () => {
               className="glass rounded-2xl p-8 glow"
             >
               <motion.a
-                href="mailto:hello@developer.com"
+                href="mailto:santanupradhan599@gmail.com"
                 whileHover={{ scale: 1.05, boxShadow: "0 0 25px hsl(174 60% 45% / 0.4)" }}
                 whileTap={{ scale: 0.95 }}
                 className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-primary text-primary-foreground font-display text-sm font-medium mb-8"
@@ -520,9 +538,9 @@ const Index = () => {
 
               <div className="flex items-center justify-center gap-6 mt-4">
                 {[
-                  { icon: <Github size={22} />, href: "#", label: "GitHub" },
-                  { icon: <Linkedin size={22} />, href: "#", label: "LinkedIn" },
-                  { icon: <Mail size={22} />, href: "mailto:hello@developer.com", label: "Email" },
+                  { icon: <Github size={22} />, href: "https://github.com/santanupradhan", label: "GitHub" },
+                  { icon: <Linkedin size={22} />, href: "https://linkedin.com/in/santanupradhan", label: "LinkedIn" },
+                  { icon: <Mail size={22} />, href: "mailto:santanupradhan599@gmail.com", label: "Email" },
                 ].map((social, i) => (
                   <motion.a
                     key={social.label}
