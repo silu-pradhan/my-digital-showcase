@@ -82,9 +82,9 @@ const projects = [
     link: "#",
   },
   {
-    title: "LeetCode Node Backend",
-    description: "Backend API for a LeetCode-style coding platform with structured problem retrieval, submission handling, and code evaluation services.",
-    tech: ["Node.js", "Express", "TypeScript"],
+    title: "DilDraw",
+    description: "A collaborative drawing application where users can create rooms and draw shapes, sketch ideas, and collaborate in real-time with others on a shared canvas.",
+    tech: ["React", "Canvas API", "Socket.IO", "Node.js"],
     link: "#",
   },
   {
