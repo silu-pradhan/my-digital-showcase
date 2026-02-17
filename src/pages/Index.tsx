@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import {
   Code2, Database, Globe, Mail, Github, Linkedin, ExternalLink,
-  ChevronDown, Award, Briefcase, User, Sparkles, Terminal, Layers
+  ChevronDown, Award, Briefcase, User, Sparkles, Terminal, Layers,
+  Download, FileText
 } from "lucide-react";
 import profilePhoto from "@/assets/profile-photo.jpeg";
 import deltaCertificate from "@/assets/delta-certificate.png";
@@ -105,13 +106,11 @@ const certifications = [
   {
     title: "Alpha Delta – Full Stack Web Development",
     issuer: "Apna College",
-    image: deltaCertificate,
     link: deltaCertificate,
   },
   {
     title: "The Ultimate Job Ready Data Science Course",
     issuer: "Code With Harry",
-    image: dataScienceCertificate,
     link: dataScienceCertificate,
   },
 ];
@@ -306,7 +305,7 @@ const Index = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.6 }}
-            className="flex items-center justify-center gap-4"
+            className="flex items-center justify-center gap-4 flex-wrap"
           >
             <motion.a
               href="#contact"
@@ -323,6 +322,16 @@ const Index = () => {
               className="px-6 py-3 rounded-lg glass text-foreground font-display text-sm font-medium"
             >
               View Work
+            </motion.a>
+            <motion.a
+              href="/santanu-resume.pdf"
+              download="Santanu_Pradhan_Resume.pdf"
+              whileHover={{ scale: 1.05, boxShadow: "0 0 25px hsl(200 70% 50% / 0.3)" }}
+              whileTap={{ scale: 0.95 }}
+              className="px-6 py-3 rounded-lg glass text-foreground font-display text-sm font-medium inline-flex items-center gap-2 border border-primary/30"
+            >
+              <Download size={16} />
+              Download Resume
             </motion.a>
           </motion.div>
 
@@ -485,7 +494,7 @@ const Index = () => {
             <div className="h-1 w-16 bg-gradient-to-r from-primary to-[hsl(200,70%,50%)] rounded-full mx-auto mb-4" />
             <p className="text-muted-foreground max-w-md mx-auto">Recognized achievements & credentials</p>
           </motion.div>
-          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          <div className="flex flex-col gap-4 max-w-2xl mx-auto">
             {certifications.map((cert, i) => (
               <motion.a
                 key={cert.title}
@@ -493,29 +502,26 @@ const Index = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 custom={i}
-                variants={scaleIn}
+                variants={fadeUp}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                whileHover={{ y: -6, boxShadow: "0 0 30px -5px hsl(174 60% 45% / 0.3)" }}
-                className="group glass rounded-2xl overflow-hidden block"
+                whileHover={{ x: 8, boxShadow: "0 0 30px -5px hsl(174 60% 45% / 0.2)" }}
+                className="group glass rounded-xl p-5 flex items-center gap-4 cursor-pointer"
               >
-                <div className="aspect-video overflow-hidden bg-muted">
-                  <motion.img
-                    src={cert.image}
-                    alt={cert.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <div className="p-5">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Award size={18} className="text-primary" />
-                    <span className="text-xs font-display text-primary">{cert.issuer}</span>
-                  </div>
-                  <h3 className="font-display text-sm font-bold group-hover:text-primary transition-colors">
+                <motion.div
+                  className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0"
+                  whileHover={{ rotate: 10 }}
+                >
+                  <Award size={24} className="text-primary" />
+                </motion.div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-display text-sm font-bold group-hover:text-primary transition-colors truncate">
                     {cert.title}
                   </h3>
+                  <p className="text-xs text-muted-foreground">{cert.issuer}</p>
                 </div>
+                <ExternalLink size={16} className="text-muted-foreground group-hover:text-primary transition-colors shrink-0" />
               </motion.a>
             ))}
           </div>
