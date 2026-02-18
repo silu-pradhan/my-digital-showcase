@@ -80,25 +80,25 @@ const projects = [
     title: "Real-Time Collaborative Code Sharing",
     description: "Real-time collaborative code-sharing platform using Node.js and Socket.IO with room-based WebSocket communication and chat functionality.",
     tech: ["Node.js", "Express", "MongoDB", "React", "Socket.IO"],
-    link: "#",
+    link: "https://github.com/silu-pradhan",
   },
   {
     title: "DilDraw",
     description: "A collaborative drawing application where users can create rooms and draw shapes, sketch ideas, and collaborate in real-time with others on a shared canvas.",
     tech: ["React", "Canvas API", "Socket.IO", "Node.js"],
-    link: "#",
+    link: "https://github.com/silu-pradhan",
   },
   {
     title: "Blood Vault",
     description: "Centralized Blood Bank Management System with real-time inventory tracking, automated request workflows, and JWT-based role access control.",
     tech: ["Node.js", "Express", "MongoDB", "React"],
-    link: "#",
+    link: "https://github.com/silu-pradhan/blood-bank",
   },
   {
     title: "NeoMeet",
     description: "A real-time video call and chat application where multiple users can join rooms, talk, and collaborate with each other seamlessly.",
     tech: ["WebRTC", "Node.js", "Socket.IO", "React"],
-    link: "#",
+    link: "https://github.com/silu-pradhan/neomeet",
   },
 ];
 
@@ -533,8 +533,8 @@ const Index = () => {
 
               <div className="flex items-center justify-center gap-6 mt-4">
                 {[
-                  { icon: <Github size={22} />, href: "https://github.com/santanupradhan", label: "GitHub" },
-                  { icon: <Linkedin size={22} />, href: "https://linkedin.com/in/santanupradhan", label: "LinkedIn" },
+                  { icon: <Github size={22} />, href: "https://github.com/silu-pradhan", label: "GitHub" },
+                  { icon: <Linkedin size={22} />, href: "https://www.linkedin.com/in/santanu-pradhan-076890376", label: "LinkedIn" },
                   { icon: <Mail size={22} />, href: "mailto:santanupradhan599@gmail.com", label: "Email" },
                 ].map((social, i) => (
                   <motion.a
