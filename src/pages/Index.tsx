@@ -80,7 +80,7 @@ const projects = [
     title: "Real-Time Collaborative Code Sharing",
     description: "Real-time collaborative code-sharing platform using Node.js and Socket.IO with room-based WebSocket communication and chat functionality.",
     tech: ["Node.js", "Express", "MongoDB", "React", "Socket.IO"],
-    link: "https://github.com/silu-pradhan",
+    link: "https://drive.google.com/file/d/1RS9EVRUOvZgxhii8xfnYAGTlC8hcI70o/view?usp=drive_link",
   },
   {
     title: "DilDraw",
