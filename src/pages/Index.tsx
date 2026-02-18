@@ -168,24 +168,27 @@ const RotatingText = () => {
 };
 
 // ─── Skill Icon Card ───
-const SkillIcon = ({ name, icon, index }: { name: string; icon: React.ReactNode; index: number }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
-  return (
+const SkillIcon = ({ name, icon }: { name: string; icon: React.ReactNode }) => (
+  <div className="group glass rounded-xl p-4 flex flex-col items-center gap-2 cursor-default shrink-0 mx-2 hover:scale-110 transition-transform duration-300">
+    <span className="text-primary group-hover:text-[hsl(200,70%,50%)] transition-colors duration-300">{icon}</span>
+    <span className="font-display text-xs font-medium text-muted-foreground group-hover:text-foreground transition-colors whitespace-nowrap">{name}</span>
+  </div>
+);
+
+// ─── Marquee Row ───
+const MarqueeRow = ({ items, direction = "left" }: { items: typeof skills; direction?: "left" | "right" }) => (
+  <div className="relative overflow-hidden py-2">
     <motion.div
-      ref={ref}
-      custom={index}
-      variants={scaleIn}
-      initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
-      whileHover={{ scale: 1.12, rotate: 3 }}
-      className="group glass rounded-xl p-4 flex flex-col items-center gap-2 cursor-default hover:glow-sm transition-all duration-300"
+      className="flex w-max"
+      animate={{ x: direction === "left" ? ["0%", "-50%"] : ["-50%", "0%"] }}
+      transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
     >
-      <span className="text-primary group-hover:text-[hsl(200,70%,50%)] transition-colors duration-300">{icon}</span>
-      <span className="font-display text-xs font-medium text-muted-foreground group-hover:text-foreground transition-colors">{name}</span>
+      {[...items, ...items].map((skill, i) => (
+        <SkillIcon key={`${skill.name}-${i}`} name={skill.name} icon={skill.icon} />
+      ))}
     </motion.div>
-  );
-};
+  </div>
+);
 
 // ─── Main Component ───
 const Index = () => {
@@ -316,14 +319,6 @@ const Index = () => {
               Get In Touch
             </motion.a>
             <motion.a
-              href="#projects"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-6 py-3 rounded-lg glass text-foreground font-display text-sm font-medium"
-            >
-              View Work
-            </motion.a>
-            <motion.a
               href="/santanu-resume.pdf"
               download="Santanu_Pradhan_Resume.pdf"
               whileHover={{ scale: 1.05, boxShadow: "0 0 25px hsl(200 70% 50% / 0.3)" }}
@@ -368,27 +363,6 @@ const Index = () => {
               <p className="text-muted-foreground leading-relaxed mb-6">
                 Previously interned as a Backend Developer at SLK Software, building scalable REST APIs, authentication systems, and database solutions. Passionate about real-time applications and open source.
               </p>
-              <div className="flex gap-4">
-                {[
-                  { icon: <Briefcase size={18} />, label: "Projects", value: "10+" },
-                  { icon: <Code2 size={18} />, label: "Technologies", value: "15+" },
-                  { icon: <Award size={18} />, label: "Certifications", value: "2" },
-                ].map((stat, i) => (
-                  <motion.div
-                    key={stat.label}
-                    custom={i}
-                    variants={scaleIn}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    className="glass rounded-xl p-4 text-center flex-1"
-                  >
-                    <span className="text-primary mb-1 block">{stat.icon}</span>
-                    <div className="font-display text-xl font-bold text-foreground">{stat.value}</div>
-                    <div className="text-xs text-muted-foreground">{stat.label}</div>
-                  </motion.div>
-                ))}
-              </div>
             </motion.div>
 
             <motion.div
@@ -432,10 +406,9 @@ const Index = () => {
             <div className="h-1 w-16 bg-gradient-to-r from-primary to-[hsl(200,70%,50%)] rounded-full mx-auto mb-4" />
             <p className="text-muted-foreground max-w-md mx-auto">Technologies and tools I work with</p>
           </motion.div>
-          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-8 gap-4">
-            {skills.map((skill, i) => (
-              <SkillIcon key={skill.name} {...skill} index={i} />
-            ))}
+          <div className="space-y-4">
+            <MarqueeRow items={skills.slice(0, 8)} direction="left" />
+            <MarqueeRow items={skills.slice(8)} direction="right" />
           </div>
         </Section>
 
