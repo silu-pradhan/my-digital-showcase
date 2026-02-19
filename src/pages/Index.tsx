@@ -631,7 +631,7 @@ const Index = () => {
       <footer className="border-t border-border py-8 mt-12">
         <div className="max-w-6xl mx-auto px-6 text-center">
           <p className="text-sm text-muted-foreground font-display">
-            Built with ❤️ by SP
+            Built with 👍 by SP
           </p>
         </div>
       </footer>
