@@ -3,7 +3,7 @@ import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import {
   Code2, Database, Globe, Mail, Github, Linkedin, ExternalLink,
   ChevronDown, Award, Briefcase, User, Sparkles, Terminal, Layers,
-  Download, FileText
+  Download, FileText, Send, Loader2
 } from "lucide-react";
 import profilePhoto from "@/assets/profile-photo.jpeg";
 import deltaCertificate from "@/assets/delta-certificate.png";
@@ -86,7 +86,7 @@ const projects = [
     title: "DilDraw",
     description: "A collaborative drawing application where users can create rooms and draw shapes, sketch ideas, and collaborate in real-time with others on a shared canvas.",
     tech: ["React", "Canvas API", "Socket.IO", "Node.js"],
-    link: "https://github.com/silu-pradhan",
+    link: "https://github.com/silu-pradhan/draw-app",
   },
   {
     title: "Blood Vault",
@@ -189,6 +189,86 @@ const MarqueeRow = ({ items, direction = "left" }: { items: typeof skills; direc
     </motion.div>
   </div>
 );
+
+// ─── Contact Form ───
+const ContactForm = () => {
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("sending");
+    try {
+      const res = await fetch("https://formsubmit.co/ajax/santanupradhan599@gmail.com", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(formData),
+      });
+      if (res.ok) {
+        setStatus("sent");
+        setFormData({ name: "", email: "", message: "" });
+        setTimeout(() => setStatus("idle"), 4000);
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="text-left space-y-4 mb-6">
+      <div>
+        <label className="block text-xs font-display text-muted-foreground mb-1.5">Name</label>
+        <input
+          type="text"
+          required
+          maxLength={100}
+          value={formData.name}
+          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          className="w-full px-4 py-2.5 rounded-lg bg-background/50 border border-border text-foreground text-sm font-display placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
+          placeholder="Your name"
+        />
+      </div>
+      <div>
+        <label className="block text-xs font-display text-muted-foreground mb-1.5">Email</label>
+        <input
+          type="email"
+          required
+          maxLength={255}
+          value={formData.email}
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+          className="w-full px-4 py-2.5 rounded-lg bg-background/50 border border-border text-foreground text-sm font-display placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
+          placeholder="your@email.com"
+        />
+      </div>
+      <div>
+        <label className="block text-xs font-display text-muted-foreground mb-1.5">Message</label>
+        <textarea
+          required
+          maxLength={1000}
+          rows={4}
+          value={formData.message}
+          onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+          className="w-full px-4 py-2.5 rounded-lg bg-background/50 border border-border text-foreground text-sm font-display placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all resize-none"
+          placeholder="Your message..."
+        />
+      </div>
+      <motion.button
+        type="submit"
+        disabled={status === "sending"}
+        whileHover={{ scale: 1.02, boxShadow: "0 0 25px hsl(174 60% 45% / 0.4)" }}
+        whileTap={{ scale: 0.98 }}
+        className="w-full py-3 rounded-lg bg-primary text-primary-foreground font-display text-sm font-medium inline-flex items-center justify-center gap-2 disabled:opacity-60"
+      >
+        {status === "sending" ? <><Loader2 size={16} className="animate-spin" /> Sending...</> :
+         status === "sent" ? "Message Sent! ✓" :
+         status === "error" ? "Failed – Try Again" :
+         <><Send size={16} /> Send Message</>}
+      </motion.button>
+    </form>
+  );
+};
 
 // ─── Main Component ───
 const Index = () => {
@@ -521,17 +601,9 @@ const Index = () => {
               viewport={{ once: true }}
               className="glass rounded-2xl p-8 glow"
             >
-              <motion.a
-                href="mailto:santanupradhan599@gmail.com"
-                whileHover={{ scale: 1.05, boxShadow: "0 0 25px hsl(174 60% 45% / 0.4)" }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-primary text-primary-foreground font-display text-sm font-medium mb-8"
-              >
-                <Mail size={18} />
-                Say Hello
-              </motion.a>
+              <ContactForm />
 
-              <div className="flex items-center justify-center gap-6 mt-4">
+              <div className="flex items-center justify-center gap-6 mt-8">
                 {[
                   { icon: <Github size={22} />, href: "https://github.com/silu-pradhan", label: "GitHub" },
                   { icon: <Linkedin size={22} />, href: "https://www.linkedin.com/in/santanu-pradhan-076890376", label: "LinkedIn" },
